@@ -1,0 +1,127 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="GEE Pro Suite v2.0 | Ahza Studio">
+    <!-- Navigation -->
+    <nav>
+        <div class="container">
+            <div class="nav-brand">
+                <img src="/assets/images/logo-ahza.png" alt="Ahza Studio" class="logo">
+                <span class="version">v2.0</span>
+            </div>
+            <div class="nav-links">
+                <a href="#features">Fitur</a>
+                <a href="/documentation">Dokumentasi</a>
+                <a href="#download">Download</a>
+                <a href="https://wa.me/6282254760769" class="btn-contact">Hubungi Admin</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1>Bawa Kekuatan<br><span class="highlight">Google Earth Engine</span><br>ke ArcGIS Pro</h1>
+            <p class="subtitle">Stop coding manual. Download citra Sentinel, Landsat, & LULC Global siap pakai langsung di dalam ArcGIS Pro. Otomatis, Cerdas, dan Gratis.</p>
+            <a href="/assets/data/GEE_Pro_Suite_ArcGISPro_v2.0.zip" download class="btn-primary">
+                Download GEE Pro Suite v2.0
+            </a>
+            <p class="note">Compatible with ArcGIS Pro 3.x | Free for Non-Commercial Use</p>
+        </div>
+    </section>
+
+    <!-- Hero Image -->
+    <section class="hero-preview">
+        <div class="container">
+            <img src="/assets/images/hero.png" alt="GEE Pro Suite Interface" class="preview-image">
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="features">
+        <div class="container">
+            <h2>Kenapa GEE Pro Suite?</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <h3>Smart Downloader</h3>
+                    <ul>
+                        <li>✓ UI yang "sadar konteks"</li>
+                        <li>✓ Parameter otomatis berubah sesuai dataset</li>
+                        <li>✓ Support Sentinel, Landsat, MODIS, LULC</li>
+                        <li>✓ Auto-tiling untuk area besar</li>
+                    </ul>
+                </div>
+
+                <div class="feature-card">
+                    <h3>Virtual Annual Mosaic</h3>
+                    <ul>
+                        <li>✓ Pilih tahun → Dapat Peta Dunia</li>
+                        <li>✓ Tidak ada lagi download terpotong-potong</li>
+                        <li>✓ Mosaic otomatis dari GEE</li>
+                        <li>✓ Cloud masking terintegrasi</li>
+                    </ul>
+                </div>
+
+                <div class="feature-card">
+                    <h3>Auto NDVI & Indices</h3>
+                    <ul>
+                        <li>✓ Hitung indeks spektral on-the-fly</li>
+                        <li>✓ NDVI, NDBI, MNDWI, EVI, SAVI</li>
+                        <li>✓ Zero post-processing</li>
+                        <li>✓ Langsung siap analisis</li>
+                    </ul>
+                </div>
+
+                <div class="feature-card">
+                    <h3>Band Combinations</h3>
+                    <ul>
+                        <li>✓ RGB Natural Color</li>
+                        <li>✓ False Color (NIR)</li>
+                        <li>✓ Custom band selection</li>
+                        <li>✓ Per-band download mode</li>
+                    </ul>
+                </div>
+
+                <div class="feature-card">
+                    <h3>Scene Picker</h3>
+                    <ul>
+                        <li>✓ Preview thumbnail citra</li>
+                        <li>✓ Filter by cloud cover</li>
+                        <li>✓ Pilih scene spesifik</li>
+                        <li>✓ Reducer options (Median, Mosaic)</li>
+                    </ul>
+                </div>
+
+                <div class="feature-card">
+                    <h3>Auto Add to Map</h3>
+                    <ul>
+                        <li>✓ Hasil langsung masuk Active Map</li>
+                        <li>✓ Symbology otomatis</li>
+                        <li>✓ Progress indicator</li>
+                        <li>✓ Error handling robust</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Download CTA -->
+    <section id="download" class="download-cta">
+        <div class="container">
+            <h2>Siap Meningkatkan Produktivitas GIS?</h2>
+            <p>Bergabung dengan ribuan user ArcGIS Pro yang sudah beralih ke cara cerdas.</p>
+            <a href="/assets/data/GEE_Pro_Suite_ArcGISPro_v2.0.zip" download class="btn-primary">
+                Download GEE Pro Suite v2.0
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Ahza Studio. All rights reserved.</p>
+            <p>Developed with ❤️ by Ardi Abu Ridho</p>
+        </div>
+    </footer>
+</Layout>

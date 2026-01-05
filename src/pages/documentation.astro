@@ -1,0 +1,745 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="Documentation | GEE Pro Suite">
+    <!-- Navigation -->
+    <nav>
+        <div class="container">
+            <div class="nav-brand">
+                <img src="/assets/images/logo-ahza.png" alt="Ahza Studio" class="logo">
+                <span class="version">v2.0</span>
+            </div>
+            <div class="nav-links">
+                <a href="/">Home</a>
+                <a href="/#features">Fitur</a>
+                <a href="/#download">Download</a>
+                <a href="https://wa.me/6282254760769" class="btn-contact">Hubungi Admin</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <section class="doc-hero">
+        <div class="container">
+            <h1>Dokumentasi Teknis</h1>
+            <p>Panduan lengkap penggunaan GEE Pro Suite untuk setiap dataset</p>
+        </div>
+    </section>
+
+    <!-- Documentation Content -->
+    <section class="doc-content">
+        <div class="container">
+            <div class="doc-grid">
+                <!-- Sidebar Navigation -->
+                <aside class="doc-sidebar">
+                    <h3>Navigasi Cepat</h3>
+                    <ul>
+                        <li><a href="#getting-started">Memulai</a></li>
+                        <li><a href="#sentinel2">Sentinel-2</a></li>
+                        <li><a href="#landsat">Landsat 8/9</a></li>
+                        <li><a href="#lulc">LULC Global</a></li>
+                        <li><a href="#modis">MODIS</a></li>
+                        <li><a href="#chirps">Curah Hujan (CHIRPS)</a></li>
+                        <li><a href="#lst">LST (Suhu Permukaan)</a></li>
+                        <li><a href="#parameters">Panduan Parameter</a></li>
+                    </ul>
+                </aside>
+
+                <!-- Main Content -->
+                <main class="doc-main">
+                    <!-- Getting Started -->
+                    <section id="getting-started" class="doc-section">
+                        <h2>Memulai</h2>
+                        
+                        <div class="doc-card">
+                            <h3>0. Instalasi & Prasyarat</h3>
+                            <p>Toolbox ini membutuhkan library Python <code>earthengine-api</code> untuk dapat berkomunikasi dengan server Google.</p>
+                            
+                            <h4>Metode Otomatis (Direkomendasikan)</h4>
+                            <ol>
+                                <li>Buka Toolbox <strong>"0. Install / Repair Dependencies"</strong>.</li>
+                                <li>Tool ini akan menampilkan <strong>PETUNJUK PENGGUNAAN</strong>. Langsung saja klik <strong>Run</strong>.</li>
+                                <li>Tunggu hingga proses selesai (muncul pesan <em>Success</em>).</li>
+                                <li><strong>Restart ArcGIS Pro</strong> Anda agar perubahan diterapkan.</li>
+                            </ol>
+                            <div style="margin-top: 1rem; margin-bottom: 2rem; text-align: center;">
+                                <img src="/assets/images/tool_install_param.png" alt="Tampilan Tool Install Dependencies" style="max-width: 100%; border-radius: 0.5rem; border: 1px solid rgba(255,255,255,0.1);">
+                                <p style="font-size: 0.875rem; color: #6B7280; margin-top: 0.5rem;">Tampilan Tool: Instruksi Instalasi Otomatis</p>
+                            </div>
+
+                            <h4>Metode Manual (Jika Gagal)</h4>
+                            <p>Jika cara otomatis gagal karena permission error:</p>
+                            <ol>
+                                <li>Buka <strong>Python Command Prompt</strong> dari Start Menu.</li>
+                                <li>Ketik: <code>pip install earthengine-api --upgrade</code></li>
+                            </ol>
+                        </div>
+
+                        <div class="doc-card">
+                            <h3>1. Koneksi ke GEE</h3>
+                            <p>Sebelum menggunakan tool, Anda perlu menghubungkan ArcGIS Pro dengan Google Earth Engine.</p>
+                            <ol>
+                                <li>Buka <a href="https://code.earthengine.google.com/" target="_blank">GEE Code Editor</a></li>
+                                <li>Lihat pojok kanan atas (Profile) → Copy Project ID</li>
+                                <li>Paste ke dalam tool "Connect to GEE"</li>
+                            </ol>
+                            <div style="margin-top: 1.5rem; text-align: center;">
+                                <img src="/assets/images/tool_connect.png" alt="Connect to GEE Tool" style="max-width: 100%; border-radius: 0.5rem; border: 1px solid rgba(255,255,255,0.1);">
+                                <p style="font-size: 0.875rem; color: #6B7280; margin-top: 0.5rem;">Tampilan Tool: Connect to GEE</p>
+                            </div>
+                        </div>
+
+                        <div class="doc-card">
+                            <h3>2. Data Explorer (Preview)</h3>
+                            <p>Tool untuk melihat data cepat tanpa download (Streaming). Gunakan untuk preview sebelum download.</p>
+                            <div style="margin-top: 1.5rem; text-align: center;">
+                                <img src="/assets/images/tool_explorer.png" alt="Data Explorer Tool" style="max-width: 100%; border-radius: 0.5rem; border: 1px solid rgba(255,255,255,0.1);">
+                                <p style="font-size: 0.875rem; color: #6B7280; margin-top: 0.5rem;">Tampilan Tool: Data Explorer</p>
+                            </div>
+                        </div>
+
+                        <div class="doc-card">
+                            <h3>3. Smart Downloader</h3>
+                            <p>Tool utama untuk mengunduh data geospasial dengan parameter yang dapat disesuaikan.</p>
+                            <div class="param-table">
+                                <div class="param-row">
+                                    <div class="param-name">Area of Interest (AOI)</div>
+                                    <div class="param-desc">Layer Polygon yang membatasi area download</div>
+                                </div>
+                                <div class="param-row">
+                                    <div class="param-name">Date Range</div>
+                                    <div class="param-desc">Rentang waktu akuisisi data (YYYY-MM-DD)</div>
+                                </div>
+                                <div class="param-row">
+                                    <div class="param-name">Cloud Masking</div>
+                                    <div class="param-desc">Ambang batas toleransi awan per-scene (0-100%)</div>
+                                </div>
+                                <div class="param-row">
+                                    <div class="param-name">Reducer Method</div>
+                                    <div class="param-desc">Algoritma komposit temporal (Median/Mosaic/Sum)</div>
+                                </div>
+                            </div>
+                            <div style="margin-top: 1.5rem; text-align: center;">
+                                <img src="/assets/images/tool_downloader.png" alt="Smart Downloader Tool" style="max-width: 100%; border-radius: 0.5rem; border: 1px solid rgba(255,255,255,0.1);">
+                                <p style="font-size: 0.875rem; color: #6B7280; margin-top: 0.5rem;">Tampilan Tool: Smart GEE Downloader (Pro)</p>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Sentinel-2 -->
+                    <section id="sentinel2" class="doc-section">
+                        <h2>Sentinel-2 Harmonized</h2>
+                        <div class="doc-card">
+                            <div class="card-header">
+                                <h3>Resolusi: 10m</h3>
+                                <span class="badge">Recommended</span>
+                            </div>
+                            <p>Data optis terbaik yang tersedia secara gratis. Cocok untuk digitasi detail dan monitoring vegetasi.</p>
+                            
+                            <h4>Spesifikasi Teknis</h4>
+                            <ul class="spec-list">
+                                <li><strong>Penyedia:</strong> European Space Agency (ESA)</li>
+                                <li><strong>Waktu Revisit:</strong> 5 Hari</li>
+                                <li><strong>Band:</strong> RGB (Warna Asli), NIR (Vegetasi), SWIR (Tanah)</li>
+                                <li><strong>Cakupan:</strong> Global (sejak 2015)</li>
+                            </ul>
+
+                            <div class="callout">
+                                <strong>💡 Saran Terbaik:</strong> Gunakan Reducer <code>Median</code> dan Cloud Mask <code>20%</code> untuk hasil terbaik. Rentang waktu 3-6 bulan ideal untuk citra bebas awan.
+                            </div>
+
+                            <h4>Cara Penggunaan (Langkah demi Langkah)</h4>
+                            <ol>
+                                <li><strong>Pilih Dataset:</strong> Buka Smart Downloader → Pilih "Sentinel-2 Harmonized"</li>
+                                <li><strong>Set AOI:</strong> Pilih layer polygon yang sudah dibuat di ArcGIS Pro</li>
+                                <li><strong>Set Rentang Tanggal:</strong>
+                                    <ul>
+                                        <li>Tanggal Mulai: <code>2023-01-01</code> (awal periode)</li>
+                                        <li>Tanggal Akhir: <code>2023-06-30</code> (akhir periode, 6 bulan)</li>
+                                    </ul>
+                                </li>
+                                <li><strong>Cloud Masking:</strong> Set <code>20%</code> (hanya scene dengan awan &lt;20% yang diproses)</li>
+                                <li><strong>Metode Reducer:</strong> Pilih <code>Median</code> (menghilangkan outlier/awan)</li>
+                                <li><strong>Resolusi:</strong> Biarkan default <code>10m</code> (resolusi asli)</li>
+                                <li><strong>Kombinasi Band:</strong> Pilih <code>True Color (RGB)</code> atau <code>False Color (NIR-R-G)</code></li>
+                                <li><strong>Jalankan:</strong> Klik "Run" dan tunggu proses download (5-15 menit tergantung ukuran AOI)</li>
+                            </ol>
+
+                            <h4>Contoh Penggunaan</h4>
+                            <ul>
+                                <li>✓ Pemetaan tutupan lahan detail</li>
+                                <li>✓ Monitoring perubahan vegetasi (NDVI)</li>
+                                <li>✓ Deteksi deforestasi</li>
+                                <li>✓ Analisis pertanian presisi</li>
+                            </ul>
+                        </div>
+                    </section>
+
+                    <!-- Landsat -->
+                    <section id="landsat" class="doc-section">
+                        <h2>Landsat 8/9 Collection 2</h2>
+                        <div class="doc-card">
+                            <div class="card-header">
+                                <h3>Resolusi: 30m</h3>
+                                <span class="badge">Arsip Jangka Panjang</span>
+                            </div>
+                            <p>Data historis terpanjang (sejak 1972). Ideal untuk analisis perubahan jangka panjang.</p>
+                            
+                            <h4>Spesifikasi Teknis</h4>
+                            <ul class="spec-list">
+                                <li><strong>Penyedia:</strong> NASA/USGS</li>
+                                <li><strong>Waktu Revisit:</strong> 16 Hari</li>
+                                <li><strong>Band:</strong> 11 band (Pesisir - Termal)</li>
+                                <li><strong>Cakupan:</strong> Global (1972 - sekarang)</li>
+                            </ul>
+
+                            <div class="callout">
+                                <strong>💡 Saran Terbaik:</strong> Untuk analisis runtun waktu (time-series), gunakan Collection 2 Tier 1 dengan Reducer <code>Median</code>. Cloud Mask <code>30%</code> untuk data historis.
+                            </div>
+
+                            <h4>Cara Penggunaan</h4>
+                            <ol>
+                                <li><strong>Pilih Dataset:</strong> Buka Smart Downloader → Pilih "Landsat 8/9 Collection 2"</li>
+                                <li><strong>Set AOI:</strong> Pilih layer polygon area studi</li>
+                                <li><strong>Set Rentang Tanggal:</strong>
+                                    <ul>
+                                        <li>Untuk analisis tahunan: <code>2020-01-01</code> s/d <code>2020-12-31</code></li>
+                                        <li>Untuk runtun waktu: Pilih rentang multi-tahun (misal 2015-2023)</li>
+                                    </ul>
+                                </li>
+                                <li><strong>Cloud Masking:</strong> Set <code>30%</code> (lebih toleran untuk data historis)</li>
+                                <li><strong>Metode Reducer:</strong> Pilih <code>Median</code> untuk menghilangkan noise</li>
+                                <li><strong>Resolusi:</strong> Biarkan default <code>30m</code></li>
+                                <li><strong>Kombinasi Band:</strong> Pilih sesuai kebutuhan (RGB, NDVI, atau Thermal)</li>
+                                <li><strong>Jalankan:</strong> Proses download (waktu tergantung periode dan ukuran AOI)</li>
+                            </ol>
+
+                            <h4>Contoh Penggunaan</h4>
+                            <ul>
+                                <li>✓ Analisis perubahan lahan multi-dekade</li>
+                                <li>✓ Studi iklim dan lingkungan</li>
+                                <li>✓ Monitoring perkembangan kota (urban sprawl)</li>
+                                <li>✓ Analisis thermal (suhu permukaan)</li>
+                            </ul>
+                        </div>
+                    </section>
+
+                    <!-- LULC -->
+                    <section id="lulc" class="doc-section">
+                        <h2>LULC Global (ESA WorldCover)</h2>
+                        <div class="doc-card">
+                            <div class="card-header">
+                                <h3>Resolusi: 10m</h3>
+                                <span class="badge">Tahunan</span>
+                            </div>
+                            <p>Peta tutupan lahan global yang sudah terklasifikasi. Siap pakai untuk analisis spasial.</p>
+                            
+                            <h4>Spesifikasi Teknis</h4>
+                            <ul class="spec-list">
+                                <li><strong>Penyedia:</strong> ESA (European Space Agency)</li>
+                                <li><strong>Update:</strong> Tahunan (2020, 2021, ...)</li>
+                                <li><strong>Kelas:</strong> 11 kelas (Pohon, Pertanian, Lahan Terbangun, dll)</li>
+                                <li><strong>Akurasi:</strong> 74.4% akurasi global</li>
+                            </ul>
+
+                            <div class="callout">
+                                <strong>💡 Saran Terbaik:</strong> Pilih tahun yang sesuai dengan periode analisis Anda. Tidak perlu parameter tambahan - langsung download!
+                            </div>
+
+                            <h4>Kelas Tutupan Lahan</h4>
+                            <ul>
+                                <li>✓ Tree cover (Hutan)</li>
+                                <li>✓ Shrubland (Semak)</li>
+                                <li>✓ Grassland (Padang rumput)</li>
+                                <li>✓ Cropland (Pertanian)</li>
+                                <li>✓ Built-up (Pemukiman)</li>
+                                <li>✓ Bare/sparse vegetation</li>
+                                <li>✓ Snow and ice</li>
+                                <li>✓ Permanent water bodies</li>
+                                <li>✓ Herbaceous wetland</li>
+                                <li>✓ Mangroves</li>
+                                <li>✓ Moss and lichen</li>
+                            </ul>
+                        </div>
+                    </section>
+
+                    <!-- MODIS -->
+                    <section id="modis" class="doc-section">
+                        <h2>MODIS Terra/Aqua</h2>
+                        <div class="doc-card">
+                            <div class="card-header">
+                                <h3>Resolusi: 250m - 1km</h3>
+                                <span class="badge">Harian</span>
+                            </div>
+                            <p>Data harian untuk monitoring skala regional. Cocok untuk analisis cuaca dan fenomena cepat.</p>
+                            
+                            <h4>Spesifikasi Teknis</h4>
+                            <ul class="spec-list">
+                                <li><strong>Penyedia:</strong> NASA</li>
+                                <li><strong>Waktu Revisit:</strong> 1-2 Hari</li>
+                                <li><strong>Produk:</strong> NDVI, EVI, LST, Tutupan Salju</li>
+                                <li><strong>Cakupan:</strong> Global (sejak 2000)</li>
+                            </ul>
+
+                            <div class="callout">
+                                <strong>💡 Saran Terbaik:</strong> Gunakan untuk monitoring fenomena yang berubah cepat (kebakaran, banjir, kekeringan). Resolusi rendah tapi update harian.
+                            </div>
+
+                            <h4>Cara Penggunaan</h4>
+                            <ol>
+                                <li><strong>Pilih Dataset:</strong> Buka Smart Downloader → Pilih "MODIS NDVI" atau "MODIS LST"</li>
+                                <li><strong>Set AOI:</strong> Pilih layer polygon wilayah monitoring</li>
+                                <li><strong>Set Rentang Tanggal:</strong>
+                                    <ul>
+                                        <li>Untuk monitoring harian: <code>2023-08-01</code> s/d <code>2023-08-07</code> (1 minggu)</li>
+                                        <li>Untuk trend bulanan: <code>2023-01-01</code> s/d <code>2023-12-31</code></li>
+                                    </ul>
+                                </li>
+                                <li><strong>Metode Reducer:</strong> Pilih <code>Mean</code> untuk perataan atau <code>Max</code> untuk deteksi hotspot</li>
+                                <li><strong>Resolusi:</strong> Biarkan default <code>250m</code> (NDVI) atau <code>1000m</code> (LST)</li>
+                                <li><strong>Jalankan:</strong> Proses cepat karena resolusi rendah (1-5 menit)</li>
+                                <li><strong>Analisis:</strong> Bandingkan time-series untuk deteksi anomali/perubahan cepat</li>
+                            </ol>
+
+                            <h4>Contoh Penggunaan</h4>
+                            <ul>
+                                <li>✓ Deteksi hotspot kebakaran hutan</li>
+                                <li>✓ Monitoring kekeringan (NDVI runtun waktu)</li>
+                                <li>✓ Analisis suhu permukaan lahan (LST)</li>
+                                <li>✓ Monitoring salju dan es</li>
+                            </ul>
+                        </div>
+                    </section>
+
+                    <!-- CHIRPS -->
+                    <section id="chirps" class="doc-section">
+                        <h2>CHIRPS Rainfall Data</h2>
+                        <div class="doc-card">
+                            <div class="card-header">
+                                <h3>Resolusi: 5.5km (~0.05°)</h3>
+                                <span class="badge">Harian/5-Harian</span>
+                            </div>
+                            <p>Data curah hujan global yang menggabungkan data satelit dan stasiun cuaca. Ideal untuk analisis hidrologi dan kekeringan.</p>
+                            
+                            <h4>Spesifikasi Teknis</h4>
+                            <ul class="spec-list">
+                                <li><strong>Penyedia:</strong> Climate Hazards Group (UCSB)</li>
+                                <li><strong>Resolusi Temporal:</strong> Harian & Pentadal (5-hari)</li>
+                                <li><strong>Unit:</strong> mm/hari (milimeter per hari)</li>
+                                <li><strong>Cakupan:</strong> Global 50°S - 50°N (sejak 1981)</li>
+                            </ul>
+
+                            <div class="callout">
+                                <strong>💡 Saran Terbaik:</strong> Gunakan Reducer <code>Sum</code> untuk akumulasi curah hujan bulanan/tahunan. Untuk analisis kekeringan, gunakan periode minimal 3-6 bulan.
+                            </div>
+
+                            <h4>Cara Penggunaan</h4>
+                            <ol>
+                                <li><strong>Pilih Dataset:</strong> Buka Smart Downloader → Pilih "CHIRPS Daily"</li>
+                                <li><strong>Set AOI:</strong> Pilih layer polygon wilayah analisis</li>
+                                <li><strong>Set Rentang Tanggal:</strong>
+                                    <ul>
+                                        <li>Untuk curah hujan bulanan: <code>2023-01-01</code> s/d <code>2023-01-31</code></li>
+                                        <li>Untuk curah hujan tahunan: <code>2023-01-01</code> s/d <code>2023-12-31</code></li>
+                                    </ul>
+                                </li>
+                                <li><strong>Metode Reducer:</strong> Pilih <code>Sum</code> (untuk total akumulasi hujan)</li>
+                                <li><strong>Resolusi:</strong> Biarkan default <code>5500m</code> (~5.5km)</li>
+                                <li><strong>Jalankan:</strong> Hasil dalam satuan <code>mm</code> (total curah hujan periode tersebut)</li>
+                                <li><strong>Interpretasi:</strong> Bandingkan dengan rata-rata historis untuk deteksi anomali</li>
+                            </ol>
+
+                            <h4>Workflow Analisis Curah Hujan</h4>
+                            <ol>
+                                <li><strong>Pilih Rentang Tanggal:</strong> Tentukan periode analisis (misal: 1 tahun)</li>
+                                <li><strong>Set Reducer = Sum:</strong> Untuk total curah hujan kumulatif</li>
+                                <li><strong>Download:</strong> Hasil dalam mm (total hujan selama periode)</li>
+                                <li><strong>Analisis:</strong> Bandingkan dengan rata-rata historis untuk deteksi anomali</li>
+                            </ol>
+
+                            <h4>Contoh Penggunaan</h4>
+                            <ul>
+                                <li>✓ Monitoring kekeringan (drought monitoring)</li>
+                                <li>✓ Analisis curah hujan musiman</li>
+                                <li>✓ Prediksi banjir berbasis akumulasi hujan</li>
+                                <li>✓ Studi perubahan iklim regional</li>
+                                <li>✓ Perencanaan pertanian (musim tanam)</li>
+                            </ul>
+
+                            <h4>Tips Interpretasi</h4>
+                            <ul>
+                                <li><code>0-50 mm/bulan</code> → Sangat kering (kekeringan)</li>
+                                <li><code>50-100 mm/bulan</code> → Kering (musim kemarau normal)</li>
+                                <li><code>100-300 mm/bulan</code> → Normal (curah hujan sedang)</li>
+                                <li><code>300-500 mm/bulan</code> → Basah (musim hujan)</li>
+                                <li><code>>500 mm/bulan</code> → Sangat basah (potensi banjir)</li>
+                            </ul>
+                        </div>
+                    </section>
+
+                    <!-- LST Tool -->
+                    <section id="lst" class="doc-section">
+                        <h2>Calculate Land Surface Temperature (LST)</h2>
+                        <div class="doc-card">
+                            <div class="card-header">
+                                <h3>Tool Khusus: Suhu Permukaan Tanah</h3>
+                                <span class="badge">Landsat 8/9</span>
+                            </div>
+                            <p>Tool terpisah untuk menghitung suhu permukaan tanah (Land Surface Temperature) dari data Landsat 8/9 menggunakan band thermal. Hasil dalam satuan Celsius.</p>
+                            
+                            <h4>Spesifikasi Teknis</h4>
+                            <ul class="spec-list">
+                                <li><strong>Input:</strong> Landsat 8/9 (Band 10 Thermal)</li>
+                                <li><strong>Platform:</strong> Gabungan (L8 & L9) atau Individual</li>
+                                <li><strong>Resolusi:</strong> 100m (band thermal asli)</li>
+                                <li><strong>Output:</strong> Raster suhu dalam Celsius (°C)</li>
+                            </ul>
+
+                            <div class="callout">
+                                <strong>💡 Saran Terbaik:</strong> Gunakan data musim kemarau untuk hasil terbaik. Cloud mask <code>10%</code> untuk akurasi tinggi. Periode 1-3 bulan untuk komposit yang stabil.
+                            </div>
+
+                            <h4>Cara Penggunaan</h4>
+                            <ol>
+                                <li><strong>Pilih Tool:</strong> Buka "4. Calculate Land Surface Temperature (LST)"</li>
+                                <li><strong>Platform Satelit:</strong> Pilih <code>Combined (L8 & L9)</code> untuk data terlengkap</li>
+                                <li><strong>Set AOI:</strong> Pilih layer polygon area studi</li>
+                                <li><strong>Tanggal Mulai:</strong> Misal <code>2025-12-06</code> (awal periode)</li>
+                                <li><strong>Tanggal Akhir:</strong> Misal <code>2026-01-05</code> (akhir periode, 1 bulan)</li>
+                                <li><strong>Maksimum Awan:</strong> Set <code>10%</code> (hanya scene jernih)</li>
+                                <li><strong>Output Raster:</strong> Tentukan lokasi dan nama file output (format: .tif)</li>
+                                <li><strong>Jalankan:</strong> Proses akan menghitung LST dan export ke raster (5-15 menit)</li>
+                            </ol>
+
+                            <h4>Detail Parameter</h4>
+                            <div class="param-grid">
+                                <div class="param-card">
+                                    <h4>Platform Satelit</h4>
+                                    <p><strong>Combined (L8 & L9):</strong> Menggabungkan data dari kedua satelit untuk cakupan maksimal dan waktu revisit lebih pendek.</p>
+                                </div>
+                                <div class="param-card">
+                                    <h4>Maksimum Awan</h4>
+                                    <p><strong>10%:</strong> Ambang batas ketat untuk memastikan hanya scene dengan awan minimal yang diproses, menghasilkan LST yang akurat.</p>
+                                </div>
+                            </div>
+
+                            <h4>Interpretasi Hasil</h4>
+                            <ul>
+                                <li><code>15-25°C</code> → Suhu normal (area bervegetasi, badan air)</li>
+                                <li><code>25-35°C</code> → Suhu sedang (lahan terbuka, pertanian)</li>
+                                <li><code>35-45°C</code> → Suhu tinggi (urban, lahan kering)</li>
+                                <li><code>>45°C</code> → Suhu sangat tinggi (urban heat island, lahan gundul)</li>
+                            </ul>
+
+                            <h4>Contoh Penggunaan</h4>
+                            <ul>
+                                <li>✓ Analisis Urban Heat Island (UHI)</li>
+                                <li>✓ Monitoring kekeringan dan stress vegetasi</li>
+                                <li>✓ Studi perubahan iklim lokal</li>
+                                <li>✓ Perencanaan tata ruang berbasis suhu</li>
+                                <li>✓ Analisis kenyamanan thermal perkotaan</li>
+                            </ul>
+                        </div>
+                    </section>
+
+                    <!-- Parameters Guide -->
+                    <section id="parameters" class="doc-section">
+                        <h2>Panduan Parameter</h2>
+                        <div class="doc-card">
+                            <h3>Penjelasan Metode Reducer</h3>
+                            <div class="param-grid">
+                                <div class="param-card">
+                                    <h4>Median</h4>
+                                    <p>Mengambil nilai tengah dari semua pixel. <strong>Cocok untuk:</strong> Basemap, visualisasi bersih.</p>
+                                </div>
+                                <div class="param-card">
+                                    <h4>Mosaic</h4>
+                                    <p>Mengambil pixel terbaru. <strong>Cocok untuk:</strong> Monitoring real-time, deteksi perubahan.</p>
+                                </div>
+                                <div class="param-card">
+                                    <h4>Mean (Rata-rata)</h4>
+                                    <p>Rata-rata semua pixel. <strong>Cocok untuk:</strong> Penghalusan data (smoothing), pengurangan noise.</p>
+                                </div>
+                                <div class="param-card">
+                                    <h4>Sum (Total)</h4>
+                                    <p>Jumlah total pixel. <strong>Cocok untuk:</strong> Curah hujan kumulatif, radiasi total.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="doc-card">
+                            <h3>Tips Cloud Masking (Masking Awan)</h3>
+                            <ul>
+                                <li><code>0-20%</code> → Sangat ketat, untuk visualisasi premium (bebas awan)</li>
+                                <li><code>20-40%</code> → Seimbang, untuk analisis umum</li>
+                                <li><code>40-60%</code> → Toleran, untuk area yang sering berawan (tropis)</li>
+                                <li><code>60-100%</code> → Sangat toleran, untuk data mentah/penelitian</li>
+                            </ul>
+                        </div>
+                    </section>
+                </main>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Ahza Studio. All rights reserved.</p>
+            <p>Developed with ❤️ by Ardi Abu Ridho</p>
+        </div>
+    </footer>
+</Layout>
+
+<style is:global>
+    /* Documentation Page Specific Styles - Inlined for reliability */
+    .doc-hero {
+        padding: 10rem 0 4rem;
+        text-align: center;
+        background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(16, 185, 129, 0.1));
+    }
+
+    .doc-hero h1 {
+        font-size: 3rem;
+        font-weight: 700;
+        margin-bottom: 1rem;
+        color: #ffffff;
+    }
+
+    .doc-hero p {
+        font-size: 1.25rem;
+        color: #9CA3AF;
+    }
+
+    .doc-content {
+        padding: 4rem 0 6rem;
+    }
+
+    .doc-grid {
+        display: grid;
+        grid-template-columns: 250px 1fr;
+        gap: 3rem;
+    }
+
+    .doc-sidebar {
+        position: sticky;
+        top: 100px;
+        height: fit-content;
+    }
+
+    .doc-sidebar h3 {
+        font-size: 1rem;
+        font-weight: 600;
+        margin-bottom: 1rem;
+        color: #3B82F6;
+    }
+
+    .doc-sidebar ul {
+        list-style: none;
+        padding: 0;
+    }
+
+    .doc-sidebar li {
+        margin-bottom: 0.75rem;
+    }
+
+    .doc-sidebar a {
+        color: #D1D5DB;
+        text-decoration: none;
+        font-size: 0.9rem;
+        transition: color 0.3s;
+    }
+
+    .doc-sidebar a:hover {
+        color: #3B82F6;
+    }
+
+    .doc-section {
+        margin-bottom: 4rem;
+    }
+
+    .doc-section h2 {
+        font-size: 2rem;
+        font-weight: 700;
+        margin-bottom: 1.5rem;
+        color: #ffffff;
+    }
+
+    .doc-card {
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 1rem;
+        padding: 2rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .doc-card.highlight {
+        border-color: #3B82F6;
+        box-shadow: 0 0 20px rgba(59, 130, 246, 0.2);
+    }
+
+    .card-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 1rem;
+    }
+
+    .card-header h3 {
+        font-size: 1.5rem;
+        font-weight: 600;
+        color: #3B82F6;
+        margin: 0;
+    }
+
+    .doc-card h3 {
+        font-size: 1.25rem;
+        font-weight: 600;
+        color: #3B82F6;
+        margin-bottom: 1rem;
+    }
+
+    .badge {
+        background: #10B981;
+        color: #ffffff;
+        padding: 0.25rem 0.75rem;
+        border-radius: 1rem;
+        font-size: 0.75rem;
+        font-weight: 600;
+        text-transform: uppercase;
+    }
+
+    .doc-card h4 {
+        font-size: 1.25rem;
+        font-weight: 600;
+        margin-top: 1.5rem;
+        margin-bottom: 1rem;
+        color: #ffffff;
+    }
+
+    .doc-card p {
+        color: #D1D5DB;
+        line-height: 1.8;
+        margin-bottom: 1rem;
+    }
+
+    .doc-card ol,
+    .doc-card ul {
+        color: #D1D5DB;
+        margin: 1rem 0;
+        padding-left: 1.5rem;
+    }
+
+    .doc-card ol li,
+    .doc-card ul li {
+        padding: 0.5rem 0;
+        color: #D1D5DB;
+        line-height: 1.6;
+    }
+
+    .spec-list {
+        list-style: none;
+        padding: 0;
+    }
+
+    .spec-list li {
+        padding: 0.5rem 0;
+        color: #D1D5DB;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .spec-list strong {
+        color: #3B82F6;
+        margin-right: 0.5rem;
+    }
+
+    .callout {
+        background: rgba(16, 185, 129, 0.1);
+        border-left: 4px solid #10B981;
+        padding: 1rem 1.5rem;
+        margin: 1.5rem 0;
+        border-radius: 0.5rem;
+    }
+
+    .callout strong {
+        color: #10B981;
+    }
+
+    .callout p {
+        color: #D1D5DB;
+        margin: 0;
+    }
+
+    .doc-card code {
+        background: rgba(59, 130, 246, 0.2);
+        color: #60A5FA;
+        padding: 0.2rem 0.5rem;
+        border-radius: 0.25rem;
+        font-family: 'Courier New', monospace;
+        font-size: 0.9em;
+    }
+
+    .param-table {
+        margin: 1.5rem 0;
+    }
+
+    .param-row {
+        display: grid;
+        grid-template-columns: 200px 1fr;
+        gap: 1.5rem;
+        padding: 1rem 0;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .param-name {
+        font-weight: 600;
+        color: #3B82F6;
+    }
+
+    .param-desc {
+        color: #D1D5DB;
+    }
+
+    .param-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+        margin-top: 1rem;
+    }
+
+    .param-card {
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 0.5rem;
+        padding: 1.5rem;
+    }
+
+    .param-card h4 {
+        font-size: 1.125rem;
+        font-weight: 600;
+        margin: 0 0 0.5rem 0;
+        color: #3B82F6;
+    }
+
+    .param-card p {
+        color: #D1D5DB;
+        font-size: 0.9rem;
+        margin: 0;
+    }
+
+    @media (max-width: 768px) {
+        .doc-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .doc-sidebar {
+            position: static;
+        }
+
+        .param-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>
+
