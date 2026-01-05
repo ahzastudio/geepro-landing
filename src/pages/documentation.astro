@@ -166,6 +166,76 @@ import Layout from '../layouts/Layout.astro';
                                 <li><strong>Jalankan:</strong> Klik "Run" dan tunggu proses download (5-15 menit tergantung ukuran AOI)</li>
                             </ol>
 
+                            <h4>Cara Download Index (NDVI / NDWI)</h4>
+                            <div class="callout">
+                                <strong>💡 Fitur Otomatis:</strong> Tool ini bisa langsung menghitung dan download file index tanpa perlu kalkulasi manual di ArcGIS Pro.
+                            </div>
+                            <ol>
+                                <li>Lakukan langkah setup yang sama (AOI, Tanggal, Cloud Mask).</li>
+                                <li><strong>ABAIKAN</strong> parameter <em>Kombinasi Band</em> (Biarkan "True Color" atau apapun, tidak berpengaruh saat Index dihitung).</li>
+                                <li>Pada parameter <strong>Hitung Indeks Spektral</strong> (di bawah Kombinasi Band), pilih:
+                                    <ul>
+                                        <li><code>NDVI</code> (Vegetasi) - Output raster hitam putih (-1 s/d 1)</li>
+                                        <li><code>NDWI</code> (Air)</li>
+                                        <li><code>MNDWI</code> (Air Modifikasi)</li>
+                                    </ul>
+                                </li>
+                                <li><strong>PENTING:</strong> Parameter lain (Resolusi, Reducer) <strong>BIARKAN DEFAULT</strong> agar perhitungan index akurat.</li>
+                                <li><strong>Hasil:</strong> Anda akan langsung mendapatkan file raster Index yang siap dilayout/diklasifikasi.</li>
+                            </ol>
+
+                            <div class="param-card" style="margin-top: 1rem;">
+                                <h4>📋 Tabel Detail Setting (Mode Index)</h4>
+                                <table style="width:100%; border-collapse: collapse; font-size: 0.9rem; color: #D1D5DB;">
+                                    <tr style="border-bottom: 1px solid rgba(255,255,255,0.1);">
+                                        <th style="text-align:left; padding: 8px; color: #3B82F6;">Parameter</th>
+                                        <th style="text-align:left; padding: 8px; color: #3B82F6;">Status</th>
+                                        <th style="text-align:left; padding: 8px; color: #3B82F6;">Setting Rekomendasi</th>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding: 8px;">Max Awan</td>
+                                        <td style="padding: 8px;"><span class="badge" style="background:#F59E0B">SITUASIONAL</span></td>
+                                        <td style="padding: 8px;">
+                                            <ul>
+                                                <li><strong>Jangka Panjang (>1 Thn):</strong> Set <code>10-20%</code> (Pilih data terbersih).</li>
+                                                <li><strong>Jangka Pendek:</strong> Set <code>40-60%</code> (Agar tidak bolong).</li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding: 8px;">Kombinasi Band</td>
+                                        <td style="padding: 8px;"><span class="badge" style="background:#6B7280">ABAIKAN</span></td>
+                                        <td style="padding: 8px;">Biarkan default (True Color). Tidak akan diproses.</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding: 8px;">Hitung Indeks</td>
+                                        <td style="padding: 8px;"><span class="badge" style="background:#10B981">WAJIB</span></td>
+                                        <td style="padding: 8px;">Pilih index yang diinginkan (NDVI, NDWI, dll).</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding: 8px;">Metode Reducer</td>
+                                        <td style="padding: 8px;"><span class="badge" style="background:#F59E0B">SITUASIONAL</span></td>
+                                        <td style="padding: 8px;">
+                                            <ul>
+                                                <li><strong>Jangka Pendek:</strong> <code>Mosaic</code> / <code>Median</code></li>
+                                                <li><strong>Jangka Panjang:</strong> Gunakan <code>Greenest Pixel (NDVI)</code> agar hasil maksimal (mengambil nilai vegetasi tertinggi).</li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding: 8px;">Resolusi</td>
+                                        <td style="padding: 8px;"><span class="badge" style="background:#F59E0B">DEFAULT</span></td>
+                                        <td style="padding: 8px;">Biarkan <code>10</code> (Sentinel) atau <code>30</code> (Landsat). Mengubah ini bisa merusak kalkulasi index.</td>
+                                    </tr>
+                                </table>
+                                </table>
+                            </div>
+
+                            <div style="margin-top: 1.5rem; text-align: center;">
+                                <img src="/assets/images/tool_downloader_full_params.png" alt="Full Parameter Settings" style="max-width: 100%; border-radius: 0.5rem; border: 1px solid rgba(255,255,255,0.1);">
+                                <p style="font-size: 0.875rem; color: #6B7280; margin-top: 0.5rem;">Referensi: Tampilan Full Parameter (Sentinel/Landsat)</p>
+                            </div>
+
                             <h4>Contoh Penggunaan</h4>
                             <ul>
                                 <li>✓ Pemetaan tutupan lahan detail</li>
@@ -214,6 +284,75 @@ import Layout from '../layouts/Layout.astro';
                                 <li><strong>Kombinasi Band:</strong> Pilih sesuai kebutuhan (RGB, NDVI, atau Thermal)</li>
                                 <li><strong>Jalankan:</strong> Proses download (waktu tergantung periode dan ukuran AOI)</li>
                             </ol>
+
+                            <h4>Cara Download Index (NDVI, NDBI, dll)</h4>
+                            <p>Untuk Landsat, tersedia pilihan index yang lebih lengkap untuk analisis perkotaan dan lingkungan.</p>
+                            <div class="param-grid">
+                                <div class="param-card">
+                                    <h4>Parameter Wajib Diisi</h4>
+                                    <p>Ubah parameter <strong>Hitung Indeks Spektral</strong> menjadi:</p>
+                                    <ul>
+                                        <li><code>NDVI</code> (Kerapatan Vegetasi)</li>
+                                        <li><code>NDBI</code> (Area Terbangun/Bangunan)</li>
+                                        <li><code>MNDWI</code> (Badan Air)</li>
+                                        <li><code>EVI</code> (Vegetasi Lanjutan)</li>
+                                    </ul>
+                                </div>
+                                <div class="param-card">
+                                    <h4>Saran Parameter Lain</h4>
+                                    <ul>
+                                        <li><strong>Kombinasi Band:</strong> Biarkan Default (True Color) saja.</li>
+                                        <li><strong>Resolusi:</strong> Biarkan <code>30m</code> (Jangan diubah).</li>
+                                        <li><strong>Reducer:</strong> Biarkan <code>Median</code> (Agar tidak noise).</li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="param-card" style="margin-top: 1rem;">
+                                <h4>📋 Tabel Detail Setting (Mode Index Landsat)</h4>
+                                <table style="width:100%; border-collapse: collapse; font-size: 0.9rem; color: #D1D5DB;">
+                                    <tr style="border-bottom: 1px solid rgba(255,255,255,0.1);">
+                                        <th style="text-align:left; padding: 8px; color: #3B82F6;">Parameter</th>
+                                        <th style="text-align:left; padding: 8px; color: #3B82F6;">Status</th>
+                                        <th style="text-align:left; padding: 8px; color: #3B82F6;">Instruksi Khusus</th>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding: 8px;">Max Awan</td>
+                                        <td style="padding: 8px;"><span class="badge" style="background:#F59E0B">SITUASIONAL</span></td>
+                                        <td style="padding: 8px;">
+                                            <ul>
+                                                <li><strong>Jangka Panjang (>1 Thn):</strong> Set <code>10-20%</code> (Pilih data terbersih).</li>
+                                                <li><strong>Jangka Pendek:</strong> Set <code>40-60%</code> (Agar tidak bolong).</li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding: 8px;">Kombinasi Band</td>
+                                        <td style="padding: 8px;"><span class="badge" style="background:#6B7280">ABAIKAN</span></td>
+                                        <td style="padding: 8px;">Tidak relevan saat index dipilih.</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding: 8px;">Hitung Indeks</td>
+                                        <td style="padding: 8px;"><span class="badge" style="background:#10B981">WAJIB</span></td>
+                                        <td style="padding: 8px;">Pilih NDBI (Bangunan) atau NDVI (Vegetasi).</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding: 8px;">Resolusi</td>
+                                        <td style="padding: 8px;"><span class="badge" style="background:#EF4444">JANGAN UBAH</span></td>
+                                        <td style="padding: 8px;">Wajib <code>30</code> meter. Resolusi lain bisa menyebabkan error "Out of Memory" di GEE.</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding: 8px;">Metode Reducer</td>
+                                        <td style="padding: 8px;"><span class="badge" style="background:#F59E0B">SITUASIONAL</span></td>
+                                        <td style="padding: 8px;">
+                                            <ul>
+                                                <li><strong>Jangka Pendek:</strong> <code>Mosaic</code> / <code>Median</code></li>
+                                                <li><strong>Jangka Panjang:</strong> Gunakan <code>Greenest Pixel (NDVI)</code> agar hasil maksimal.</li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
 
                             <h4>Contoh Penggunaan</h4>
                             <ul>
