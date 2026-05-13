@@ -8,13 +8,13 @@ import Layout from '../layouts/Layout.astro';
         <div class="container">
             <div class="nav-brand">
                 <img src="/assets/images/logo-ahza.png" alt="Ahza Studio" class="logo">
-                <span class="version">v2.1</span>
+                <span class="version">v2.3.0</span>
             </div>
             <div class="nav-links">
                 <a href="/">Home</a>
                 <a href="/#features">Fitur</a>
                 <a href="/#download">Download</a>
-                <a href="https://wa.me/6282254760769" class="btn-contact">Hubungi Admin</a>
+                <a href="https://wa.me/6282254760769" class="btn-contact" target="_blank" rel="noopener noreferrer">Hubungi Admin</a>
             </div>
         </div>
     </nav>
@@ -42,6 +42,7 @@ import Layout from '../layouts/Layout.astro';
                         <li><a href="#modis">MODIS</a></li>
                         <li><a href="#chirps">Curah Hujan (CHIRPS)</a></li>
                         <li><a href="#lst">LST (Suhu Permukaan)</a></li>
+                        <li><a href="#landcover">Land Cover (v2.3.0)</a></li>
                         <li><a href="#parameters">Panduan Parameter</a></li>
                     </ul>
                 </aside>
@@ -80,7 +81,7 @@ import Layout from '../layouts/Layout.astro';
                             <h3>1. Koneksi ke GEE</h3>
                             <p>Sebelum menggunakan tool, Anda perlu menghubungkan ArcGIS Pro dengan Google Earth Engine.</p>
                             <ol>
-                                <li>Buka <a href="https://code.earthengine.google.com/" target="_blank">GEE Code Editor</a></li>
+                                <li>Buka <a href="https://code.earthengine.google.com/" target="_blank" rel="noopener noreferrer">GEE Code Editor</a></li>
                                 <li>Lihat pojok kanan atas (Profile) → Copy Project ID</li>
                                 <li>Paste ke dalam tool "Connect to GEE"</li>
                             </ol>
@@ -579,6 +580,36 @@ import Layout from '../layouts/Layout.astro';
                                 <li>✓ Perencanaan tata ruang berbasis suhu</li>
                                 <li>✓ Analisis kenyamanan thermal perkotaan</li>
                             </ul>
+                        </div>
+                    </section>
+
+                    <!-- Land Cover Classification -->
+                    <section id="landcover" class="doc-section">
+                        <h2>Land Cover Classification (v2.3.0)</h2>
+                        <div class="doc-card">
+                            <div class="card-header">
+                                <h3>Smart Land Cover Downloader</h3>
+                                <span class="badge" style="background:#8B5CF6">Fitur Baru</span>
+                            </div>
+                            <p>Fitur tercanggih di versi 2.3.0. Men-download data klasifikasi tutupan lahan secara otomatis dengan dukungan area raksasa dan output langsung ke Geodatabase.</p>
+                            
+                            <h4>Fitur Unggulan v2.3.0</h4>
+                            <ul class="spec-list">
+                                <li><strong>Auto-Tiling:</strong> Otomatis memecah area download besar menjadi grid untuk menembus batas limit Google Earth Engine (32MB), lalu menyatukannya (mosaic) kembali secara otomatis.</li>
+                                <li><strong>Output Geodatabase (GDB):</strong> Hasil download kini disimpan ke dalam format native ArcGIS Geodatabase secara default untuk menjamin stabilitas data.</li>
+                                <li><strong>Polygon Conversion:</strong> Opsi langsung mengubah hasil raster tutupan lahan menjadi format Polygon dengan <em>Geometry Smoothing (PAEK)</em> agar batas lahan tidak kotak-kotak (smooth).</li>
+                                <li><strong>Auto-Symbology:</strong> Mendukung otomatisasi pewarnaan standar/legenda untuk klasifikasi KLHK, MapBiomas, dan NLCD.</li>
+                            </ul>
+
+                            <h4>Cara Penggunaan</h4>
+                            <ol>
+                                <li><strong>Pilih Tool:</strong> Buka Tool "Land Cover Classification"</li>
+                                <li><strong>Set AOI:</strong> Pilih layer polygon batas wilayah studi Anda</li>
+                                <li><strong>Skema Klasifikasi:</strong> Pilih skema yang diinginkan (misal: KLHK atau MapBiomas)</li>
+                                <li><strong>Opsi Vektor:</strong> Centang "Convert to Polygon" jika Anda butuh hasil dalam bentuk Shapefile/Feature Class.</li>
+                                <li><strong>Output:</strong> Pilih lokasi penyimpanan (Disarankan biarkan di Default.gdb bawaan project Anda)</li>
+                                <li><strong>Jalankan:</strong> Tool akan otomatis mendeteksi ukuran wilayah. Jika wilayah Anda terlalu besar, algoritma Auto-Tiling akan aktif dengan sendirinya di belakang layar.</li>
+                            </ol>
                         </div>
                     </section>
 
